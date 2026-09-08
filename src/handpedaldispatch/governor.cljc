@@ -66,7 +66,7 @@
   legitimately carries a :route-assignment field / mentions a route
   label without attempting to finalize navigation). See
   `handpedaldispatch.governor-test/default-mock-advisor-proposals-never-self-trip`."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [handpedaldispatch.store :as store]))
 
 (def confidence-floor 0.6)
@@ -93,9 +93,9 @@
   route/traffic-navigation decision or override the driver's on-road
   safety judgment. Hard, permanent block regardless of :op."
   [proposal]
-  (let [text (str/lower-case
+  (let [text (str/lower
               (str/join " " (keep #(when (string? %) %) (vals proposal))))]
-    (boolean (some #(str/includes? text (str/lower-case %)) scope-exclusion-phrases))))
+    (boolean (some #(str/includes? text (str/lower %)) scope-exclusion-phrases))))
 
 (defn- hard-violations [{:keys [request proposal]} driver-record v]
   (let [{:keys [op estimated-cost]} proposal
