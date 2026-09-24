@@ -1,5 +1,5 @@
 (ns handpedaldispatch.governor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [handpedaldispatch.store :as store]
             [handpedaldispatch.advisor :as advisor]
             [handpedaldispatch.governor :as governor]))
