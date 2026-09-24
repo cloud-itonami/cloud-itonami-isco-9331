@@ -24,7 +24,7 @@
                :trip-id, :fare-amount, :shift-start, :shift-end,
                :route-assignment, :concern-type, :severity,
                :description, :estimated-cost, :maintenance-type).}"
-  (:require #?(:clj [clojure.edn :as edn] :cljs [cljs.reader :as edn])))
+  (:require #?(:clj [kotoba.lang.edn :as edn] :cljs [cljs.reader :as edn])))
 
 (defprotocol Advisor
   (-advise [advisor store request] "request -> proposal map"))
