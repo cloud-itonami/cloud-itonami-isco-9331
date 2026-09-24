@@ -1,0 +1,36 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a dispatch/logistics coordination robot performs
+;; driver-roster scheduling, trip/fare/incident logging and maintenance-order
+;; coordination for hand/pedal-vehicle operations (ISCO 9331). It never
+;; operates a vehicle and never finalizes a route. The physical work it
+;; coordinates is the loaded pedal cargo tricycle's run: whether a trip's load
+;; can be pedalled up the street grades on the assigned leg, and how high the
+;; cargo may be stacked before a hard stop tips the vehicle forward.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-9331"
+ :cases
+ [{:id :cargo-trike-up-grade
+   :kind :transport
+   :procedure "pedal cargo tricycle (vehicle + rider 115 kg) carries an 80 kg delivery 200 m up a street grade"
+   :params {:mass-kg 115.0 :payload-kg 80.0 :distance-m 200.0 :v-max-mps 4.0 :a-max-mps2 0.5
+            :brake-decel-mps2 2.0 :drive-force-n 150.0 :crr 0.012
+            :cog-height-m 0.70 :support-half-length-m 0.50 :max-time-s 1800.0}
+   :sweep {:param :slope-deg :values [0.0 1.0 2.0 3.0 4.0 5.0]}
+   :quantity :cycle-time-s
+   :limit {:max 120.0 :basis "estimate: a 200 m leg should take no more than 2 minutes for the trip schedule to hold"}
+   :boundary {:lo 0.0 :hi 8.0}}
+  {:id :cargo-stack-hard-stop
+   :kind :transport
+   :procedure "cargo tricycle with a 100 kg load brakes hard (3 m/s2) at the end of a 100 m flat leg; cargo stack height varied"
+   :params {:mass-kg 115.0 :payload-kg 100.0 :distance-m 100.0 :v-max-mps 4.0 :a-max-mps2 0.5
+            :brake-decel-mps2 3.0 :drive-force-n 150.0 :crr 0.012
+            :cog-height-m 0.70 :support-half-length-m 0.50 :max-time-s 1800.0}
+   :sweep {:param :payload-cog-height-m :values [0.6 0.9 1.2 1.5 1.8]}
+   :quantity :min-tipover-margin
+   :limit {:min 0.3 :basis "estimate: keep 30% static-stability margin at a hard stop for an unsecured cargo stack"}
+   :boundary {:lo 0.5 :hi 2.5}}]}
