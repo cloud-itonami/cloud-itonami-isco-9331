@@ -1,7 +1,7 @@
 (ns handpedaldispatch.store
   "SSoT for the ISCO-08 9331 hand and pedal vehicle dispatch
   coordination actor (itonami actor pattern, ADR-2607121000 /
-  CLAUDE.md Actors section; README's 'Robotics premise' — a
+  AGENTS.md Actors section; README's 'Robotics premise' — a
   dispatch/logistics coordination robot performs driver-roster
   scheduling, trip/fare/incident-report logging, safety-concern
   surfacing and maintenance-order coordination for rickshaw/pedicab/

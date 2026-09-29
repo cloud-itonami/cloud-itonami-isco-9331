@@ -1,7 +1,7 @@
 (ns handpedaldispatch.actor
   "HandPedalDispatchActor — the ISCO-08 9331 hand and pedal vehicle
   dispatch coordination actor as a `langgraph.graph/state-graph`
-  (ADR-2607121000 / CLAUDE.md Actors section). One graph run = one
+  (ADR-2607121000 / AGENTS.md Actors section). One graph run = one
   dispatch/logistics coordination operation request (intake → advise →
   govern → decide → commit/hold, with a human-approval interrupt for
   escalated proposals). No infinite internal loop; checkpointed per
